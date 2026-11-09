@@ -183,9 +183,12 @@ function renderEssayView() {
         </aside>
       </div>
 
-      <div class="actions">
+      <div class="actions actions-stack">
         <button type="button" class="btn btn-primary" data-action="start-react">
           Start R.E.A.C.T.
+        </button>
+        <button type="button" class="btn" data-action="open-log">
+          Open feedback log
         </button>
       </div>
     </section>
@@ -196,6 +199,11 @@ function renderEssayView() {
       state.screen = "react";
       state.commentIndex = 0;
       state.stepIndex = 0;
+      render();
+      window.scrollTo(0, 0);
+    },
+    "open-log": () => {
+      state.screen = "log";
       render();
       window.scrollTo(0, 0);
     },
@@ -339,13 +347,13 @@ function renderLogView() {
       const reflection = getReflectionForFeedback(item.id) || {};
       return `
         <tr>
-          <td data-label="Feedback received">
+          <td>
             <span class="type-tag type-${escapeHtml(item.type)}">${escapeHtml(typeLabel(item.type))}</span>
             <p class="log-feedback">${escapeHtml(item.text)}</p>
           </td>
-          <td data-label="What it means (in my words)">${escapeHtml(reflection.meaning || "")}</td>
-          <td data-label="What I changed">${escapeHtml(reflection.what_changed || "")}</td>
-          <td data-label="Why I changed it">${escapeHtml(reflection.why_changed || "")}</td>
+          <td>${escapeHtml(reflection.meaning || "")}</td>
+          <td>${escapeHtml(reflection.what_changed || "")}</td>
+          <td>${escapeHtml(reflection.why_changed || "")}</td>
         </tr>
       `;
     })
