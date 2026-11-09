@@ -1,14 +1,14 @@
 :root {
-  --bg: #030431;
-  --bg-mid: #070a3c;
-  --surface: #0d1048;
-  --surface-raised: #14185a;
+  --bg: #212233;
+  --surface: #2a2c3f;
+  --surface-raised: #32344a;
+  --surface-emphasis: #2e3250;
   --ink: #bbc0ce;
   --muted: #a3c2fa;
-  --line: #2c3270;
+  --line: #3e4158;
   --accent: #9ec0ff;
-  --accent-soft: #1c2258;
-  --accent-ink: #030431;
+  --accent-soft: #2a3148;
+  --accent-ink: #212233;
   --focus: #7ea6f0;
   --placeholder: #7a88b8;
   --danger-ink: #ffb4b4;
@@ -33,7 +33,7 @@ body {
   font-size: 1rem;
   line-height: 1.55;
   color: var(--ink);
-  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg) 45%, var(--bg) 100%);
+  background: var(--bg);
 }
 
 .site-header {
@@ -70,14 +70,12 @@ body {
 .status.error {
   color: var(--danger-ink);
   background: var(--danger-bg);
-  border: 1px solid var(--danger-line);
   border-radius: var(--radius);
   padding: 0.85rem 1rem;
 }
 
 .view {
   background: var(--surface);
-  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.25rem;
 }
@@ -100,7 +98,6 @@ body {
 }
 
 .panel {
-  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1rem;
   background: var(--surface-raised);
@@ -155,13 +152,11 @@ body {
   padding: 0.75rem;
   border-radius: var(--radius);
   background: var(--surface);
-  border: 1px solid transparent;
   scroll-margin-top: 1rem;
 }
 
 .paragraph.has-comment {
-  border-color: #3a4a8a;
-  background: #12165a;
+  background: var(--surface-emphasis);
 }
 
 .para-num {
@@ -212,7 +207,6 @@ body {
   padding: 0.85rem;
   border-radius: var(--radius);
   background: var(--surface);
-  border: 1px solid var(--line);
   scroll-margin-top: 1rem;
 }
 
@@ -240,22 +234,22 @@ body {
 }
 
 .type-surface {
-  background: #23284e;
+  background: #0b1479;
   color: #c5cce3;
 }
 
 .type-structural {
-  background: #1a3a3a;
+  background: #2a3c3c;
   color: #9fd6c8;
 }
 
 .type-task_alignment {
-  background: #3a2f1f;
+  background: #3c3428;
   color: #e2c89a;
 }
 
 .type-developmental {
-  background: #2a2648;
+  background: #34304a;
   color: #c8b8ef;
 }
 
@@ -352,7 +346,7 @@ a.comment-target:focus-visible {
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 4px;
-  border: 1px solid var(--line);
+  background: var(--surface-raised);
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 700;
@@ -360,19 +354,16 @@ a.comment-target:focus-visible {
 
 .step-letter.is-done {
   background: var(--accent-soft);
-  border-color: #3a4a8a;
   color: var(--accent);
 }
 
 .step-letter.is-current {
   background: var(--accent);
-  border-color: var(--accent);
   color: var(--accent-ink);
 }
 
 .comment-focus {
-  background: #12165a;
-  border-color: #3a4a8a;
+  background: var(--surface-emphasis);
 }
 
 .answer-panel {
@@ -396,7 +387,7 @@ a.comment-target:focus-visible {
 .answer-box {
   width: 100%;
   resize: vertical;
-  border: 1px solid var(--line);
+  border: none;
   border-radius: var(--radius);
   padding: 0.75rem 0.85rem;
   font: inherit;
