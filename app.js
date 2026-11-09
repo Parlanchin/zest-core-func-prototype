@@ -339,13 +339,13 @@ function renderLogView() {
       const reflection = getReflectionForFeedback(item.id) || {};
       return `
         <tr>
-          <td>
+          <td data-label="Feedback received">
             <span class="type-tag type-${escapeHtml(item.type)}">${escapeHtml(typeLabel(item.type))}</span>
             <p class="log-feedback">${escapeHtml(item.text)}</p>
           </td>
-          <td>${escapeHtml(reflection.meaning || "")}</td>
-          <td>${escapeHtml(reflection.what_changed || "")}</td>
-          <td>${escapeHtml(reflection.why_changed || "")}</td>
+          <td data-label="What it means (in my words)">${escapeHtml(reflection.meaning || "")}</td>
+          <td data-label="What I changed">${escapeHtml(reflection.what_changed || "")}</td>
+          <td data-label="Why I changed it">${escapeHtml(reflection.why_changed || "")}</td>
         </tr>
       `;
     })
@@ -359,7 +359,7 @@ function renderLogView() {
     <section class="view" id="view-log" data-screen="log">
       <header class="view-header">
         <h1>Feedback log</h1>
-        <p class="view-lead">Proof of the thinking behind the revision: what the feedback meant, what changed, and why.</p>
+        <p class="view-lead">Proof of the thinking behind the revision: what the feedback meant, what changed, and why. Filled from the R.E.A.C.T. answers in <code>data.json</code>.</p>
       </header>
 
       <div class="table-wrap">

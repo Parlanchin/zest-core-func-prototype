@@ -471,6 +471,54 @@ a.comment-target:focus-visible {
   color: var(--ink);
 }
 
+@media (max-width: 719px) {
+  .log-table {
+    min-width: 0;
+  }
+
+  .log-table thead {
+    display: none;
+  }
+
+  .log-table,
+  .log-table tbody,
+  .log-table tr,
+  .log-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .log-table tr {
+    padding: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .log-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .log-table td {
+    border: none;
+    border-bottom: 1px solid #ece9e2;
+    padding: 0.55rem 0;
+  }
+
+  .log-table td:last-child {
+    border-bottom: none;
+  }
+
+  .log-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+}
+
 @media (min-width: 800px) {
   .view {
     padding: 1.5rem 1.75rem;
