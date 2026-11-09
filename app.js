@@ -7,6 +7,49 @@ const TYPE_LABELS = {
   developmental: "Developmental feedback",
 };
 
+const REACT_STEPS = [
+  {
+    key: "recognize",
+    letter: "R",
+    name: "Recognise",
+    cue: "Categorise this feedback. What type is it?",
+  },
+  {
+    key: "evaluate",
+    letter: "E",
+    name: "Evaluate",
+    cue: "Is it accurate, important, and aligned with the task?",
+  },
+  {
+    key: "articulate",
+    letter: "A",
+    name: "Articulate",
+    cue: "Paraphrase the feedback in your own words.",
+  },
+  {
+    key: "choose",
+    letter: "C",
+    name: "Choose",
+    cue: "Accept, adapt, or reject — and justify your decision.",
+  },
+  {
+    key: "transform",
+    letter: "T",
+    name: "Transform",
+    cue: "What did you change, and why did it strengthen the writing?",
+  },
+];
+
+const DECISION_OPTIONS = ["accept", "adapt", "reject"];
+
+const state = {
+  data: null,
+  screen: "essay", // essay | react | log
+  commentIndex: 0,
+  stepIndex: 0,
+  revealed: {},
+};
+
 function escapeHtml(text) {
   return String(text)
     .replace(/&/g, "&amp;")
@@ -31,7 +74,45 @@ function commentsForParagraph(feedback, paragraphNumber) {
   return feedback.filter((item) => item.paragraph === paragraphNumber);
 }
 
-function renderEssayView(data) {
+function revealKey(commentIndex, stepIndex) {
+  return `${commentIndex}:${stepIndex}`;
+}
+
+function isRevealed(commentIndex, stepIndex) {
+  return Boolean(state.revealed[revealKey(commentIndex, stepIndex)]);
+}
+
+function getTaskForFeedback(feedbackId) {
+  return (state.data.tasks || []).find((task) => task.feedback_id === feedbackId);
+}
+
+function getReflectionForFeedback(feedbackId) {
+  return (state.data.reflection || []).find((item) => item.feedback_id === feedbackId);
+}
+
+function bindClicks(root, handlers) {
+  root.querySelectorAll("[data-action]").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      const action = el.getAttribute("data-action");
+      if (handlers[action]) handlers[action](event, el);
+    });
+  });
+}
+
+function render() {
+  if (!state.data) return;
+
+  if (state.screen === "essay") {
+    renderEssayView();
+  } else if (state.screen === "react") {
+    renderReactView();
+  } else {
+    renderLogView();
+  }
+}
+
+function renderEssayView() {
+  const data = state.data;
   const paragraphs = splitParagraphs(data.draft);
   const feedback = data.feedback || [];
 
@@ -103,20 +184,227 @@ function renderEssayView(data) {
       </div>
 
       <div class="actions">
-        <button type="button" class="btn btn-primary" id="start-react" disabled title="Walkthrough comes in the next build step">
+        <button type="button" class="btn btn-primary" data-action="start-react">
           Start R.E.A.C.T.
         </button>
       </div>
     </section>
+  `;
 
-    <section class="view" id="view-react" data-screen="react" hidden>
-      <h1>R.E.A.C.T. walkthrough</h1>
-    </section>
+  bindClicks(app, {
+    "start-react": () => {
+      state.screen = "react";
+      state.commentIndex = 0;
+      state.stepIndex = 0;
+      render();
+      window.scrollTo(0, 0);
+    },
+  });
+}
 
-    <section class="view" id="view-log" data-screen="log" hidden>
-      <h1>Feedback log</h1>
+function buildStepAnswerFields(step, task, reflection, revealed) {
+  if (step.key === "choose") {
+    const decision = revealed && task?.choose ? task.choose.decision : "";
+    const reason = revealed && task?.choose ? task.choose.reason : "";
+    const options = DECISION_OPTIONS.map((option) => {
+      const selected = decision === option ? " is-selected" : "";
+      return `<span class="decision-chip${selected}">${escapeHtml(option)}</span>`;
+    }).join("");
+
+    return `
+      <div class="field">
+        <label class="field-label">Decision</label>
+        <div class="decision-row" aria-live="polite">${options}</div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="student-answer">Justification</label>
+        <textarea id="student-answer" class="answer-box" rows="5" readonly placeholder="Your justification…">${escapeHtml(reason)}</textarea>
+      </div>
+    `;
+  }
+
+  if (step.key === "transform") {
+    const whatChanged = revealed && reflection ? reflection.what_changed : "";
+    const whyChanged = revealed && reflection ? reflection.why_changed : "";
+    return `
+      <div class="field">
+        <label class="field-label" for="student-answer-what">What I changed</label>
+        <textarea id="student-answer-what" class="answer-box" rows="4" readonly placeholder="Describe the revision…">${escapeHtml(whatChanged)}</textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="student-answer-why">Why it improved the text</label>
+        <textarea id="student-answer-why" class="answer-box" rows="4" readonly placeholder="Explain why the change strengthens the writing…">${escapeHtml(whyChanged)}</textarea>
+      </div>
+    `;
+  }
+
+  const value = revealed && task ? task[step.key] || "" : "";
+  return `
+    <div class="field">
+      <label class="field-label" for="student-answer">Your response</label>
+      <textarea id="student-answer" class="answer-box" rows="6" readonly placeholder="Write your response…">${escapeHtml(value)}</textarea>
+    </div>
+  `;
+}
+
+function renderReactView() {
+  const data = state.data;
+  const feedbackList = data.feedback || [];
+  const comment = feedbackList[state.commentIndex];
+  const step = REACT_STEPS[state.stepIndex];
+  const task = getTaskForFeedback(comment.id);
+  const reflection = getReflectionForFeedback(comment.id);
+  const revealed = isRevealed(state.commentIndex, state.stepIndex);
+  const isLastStep =
+    state.commentIndex === feedbackList.length - 1 &&
+    state.stepIndex === REACT_STEPS.length - 1;
+
+  const targetNote =
+    comment.paragraph == null
+      ? "Whole draft"
+      : `Paragraph ${comment.paragraph}`;
+
+  const letterTrail = REACT_STEPS.map((item, index) => {
+    const current = index === state.stepIndex ? " is-current" : "";
+    const done = index < state.stepIndex ? " is-done" : "";
+    return `<span class="step-letter${current}${done}" title="${escapeHtml(item.name)}">${item.letter}</span>`;
+  }).join("");
+
+  app.innerHTML = `
+    <section class="view" id="view-react" data-screen="react">
+      <header class="view-header">
+        <p class="progress">Comment ${state.commentIndex + 1} of ${feedbackList.length} · ${escapeHtml(step.name)}</p>
+        <h1>${escapeHtml(step.letter)} — ${escapeHtml(step.name)}</h1>
+        <p class="view-lead">${escapeHtml(step.cue)}</p>
+        <div class="step-trail" aria-hidden="true">${letterTrail}</div>
+      </header>
+
+      <div class="panel comment-focus">
+        <div class="comment-meta">
+          <span class="type-tag type-${escapeHtml(comment.type)}">${escapeHtml(typeLabel(comment.type))}</span>
+          <span class="comment-target">${escapeHtml(targetNote)}</span>
+        </div>
+        <p class="comment-text">${escapeHtml(comment.text)}</p>
+      </div>
+
+      <div class="panel answer-panel">
+        ${buildStepAnswerFields(step, task, reflection, revealed)}
+        <div class="reveal-row">
+          <button type="button" class="btn" data-action="reveal" ${revealed ? "disabled" : ""}>
+            ${revealed ? "Student response shown" : "Show student response"}
+          </button>
+        </div>
+      </div>
+
+      <div class="actions actions-split">
+        <button type="button" class="btn" data-action="back-essay">Back to essay</button>
+        <button type="button" class="btn btn-primary" data-action="next-step">
+          ${isLastStep ? "Open feedback log" : "Next"}
+        </button>
+      </div>
     </section>
   `;
+
+  bindClicks(app, {
+    reveal: () => {
+      state.revealed[revealKey(state.commentIndex, state.stepIndex)] = true;
+      render();
+    },
+    "back-essay": () => {
+      state.screen = "essay";
+      render();
+      window.scrollTo(0, 0);
+    },
+    "next-step": () => {
+      if (state.stepIndex < REACT_STEPS.length - 1) {
+        state.stepIndex += 1;
+      } else if (state.commentIndex < feedbackList.length - 1) {
+        state.commentIndex += 1;
+        state.stepIndex = 0;
+      } else {
+        state.screen = "log";
+      }
+      render();
+      window.scrollTo(0, 0);
+    },
+  });
+}
+
+function renderLogView() {
+  const data = state.data;
+  const feedback = data.feedback || [];
+
+  const rows = feedback
+    .map((item) => {
+      const reflection = getReflectionForFeedback(item.id) || {};
+      return `
+        <tr>
+          <td>
+            <span class="type-tag type-${escapeHtml(item.type)}">${escapeHtml(typeLabel(item.type))}</span>
+            <p class="log-feedback">${escapeHtml(item.text)}</p>
+          </td>
+          <td>${escapeHtml(reflection.meaning || "")}</td>
+          <td>${escapeHtml(reflection.what_changed || "")}</td>
+          <td>${escapeHtml(reflection.why_changed || "")}</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const revisedParagraphs = splitParagraphs(data.revised_draft || "")
+    .map((text) => `<p>${escapeHtml(text)}</p>`)
+    .join("");
+
+  app.innerHTML = `
+    <section class="view" id="view-log" data-screen="log">
+      <header class="view-header">
+        <h1>Feedback log</h1>
+        <p class="view-lead">Proof of the thinking behind the revision: what the feedback meant, what changed, and why.</p>
+      </header>
+
+      <div class="table-wrap">
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th>Feedback received</th>
+              <th>What it means (in my words)</th>
+              <th>What I changed</th>
+              <th>Why I changed it</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel revised-panel">
+        <h2 class="panel-title">Revised draft</h2>
+        <div class="revised-draft">${revisedParagraphs}</div>
+      </div>
+
+      <div class="actions actions-split">
+        <button type="button" class="btn" data-action="back-essay">Back to essay</button>
+        <button type="button" class="btn" data-action="restart-react">Replay R.E.A.C.T.</button>
+      </div>
+    </section>
+  `;
+
+  bindClicks(app, {
+    "back-essay": () => {
+      state.screen = "essay";
+      render();
+      window.scrollTo(0, 0);
+    },
+    "restart-react": () => {
+      state.screen = "react";
+      state.commentIndex = 0;
+      state.stepIndex = 0;
+      state.revealed = {};
+      render();
+      window.scrollTo(0, 0);
+    },
+  });
 }
 
 async function init() {
@@ -127,9 +415,9 @@ async function init() {
     if (!response.ok) {
       throw new Error(`Could not load data.json (${response.status})`);
     }
-    const data = await response.json();
-    window.appData = data;
-    renderEssayView(data);
+    state.data = await response.json();
+    window.appData = state.data;
+    render();
   } catch (error) {
     console.error(error);
     showStatus(
