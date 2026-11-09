@@ -1,0 +1,105 @@
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --ink: #1c1c1c;
+  --muted: #5c5c5c;
+  --line: #d8d5ce;
+  --accent: #2f4a3c;
+  --accent-soft: #e6eee9;
+  --radius: 6px;
+  --space: 1rem;
+  --max: 42rem;
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: linear-gradient(180deg, #efece6 0%, var(--bg) 40%, var(--bg) 100%);
+}
+
+.site-header {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.5rem var(--space) 0.75rem;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.tagline {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.app {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--space) 2.5rem;
+}
+
+.status {
+  margin: 1.5rem 0;
+  color: var(--muted);
+}
+
+.status.error {
+  color: #7a2e2e;
+  background: #f8ecec;
+  border: 1px solid #e4c4c4;
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+}
+
+.view {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.view h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.view p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.meta strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .view {
+    padding: 1.5rem 1.75rem;
+  }
+}

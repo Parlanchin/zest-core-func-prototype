@@ -1,0 +1,77 @@
+{
+    "task": "You have seen the following comment posted in an international student's forum online: \"Social media does more harm than good for young people. It should be banned for anyone under 18.\" Write an opinion essay giving your view on this statement. Support your arguments with reasons and relevant examples. (180-200 words)",
+    "draft": "Nowadays social media is everywhere and many people think it is bad for young peoples. In my opinion, there are some problems but banning it is not the best solution. I will explain my opinion in this essay.\n\nFirstly, social media can make teenagers feel bad about themselves. They see perfect photos of other people and they compare, this can affect their sleep and their grades. For example, some of my classmates stay awake until midnight looking at their phones. Also there are many dangerous peoples online. Some teenagers do not know who they are talking with.\n\nSocial media is good too. It is very modern. Many young people use it every day and it is popular. For example, my cousin talks to his friends who live in other countries on social media and he is learning English too. Teenagers like it a lot so they would be angry if it is banned, and that is not good.\n\nIn conclusion, social media have both good and bad sides. The government should think about this carefully and find a solution. I think the rules should be different for different ages.",
+    "feedback": [
+      {
+        "id": 1,
+        "type": "structural",
+        "paragraph": 3,
+        "text": "Paragraph 3 lists benefits but doesn't explain why they matter. Is your argument clear?"
+      },
+      {
+        "id": 2,
+        "type": "surface",
+        "paragraph": null,
+        "text": "Check plural forms and subject-verb agreement in paragraphs 1, 2 and 4."
+      },
+      {
+        "id": 3,
+        "type": "task_alignment",
+        "paragraph": 4,
+        "text": "Does your conclusion clearly answer the question about banning social media?"
+      }
+    ],
+    "tasks": [
+      {
+        "feedback_id": 1,
+        "recognize": "This is structural feedback. It's about how my argument is built, not about grammar.",
+        "evaluate": "I think it's accurate. I wrote 'it is popular' and 'it is very modern', but those aren't real reasons. It's also important, because this paragraph is where I argue against a ban.",
+        "articulate": "I need to say why social media benefits matter, not just that they exist. My cousin's example should show how it helps young people, and that should connect back to banning it.",
+        "choose": {
+          "decision": "accept",
+          "reason": "The argument in paragraph 3 is my weakest, so fixing it will improve the essay most."
+        }
+      },
+      {
+        "feedback_id": 2,
+        "recognize": "This is surface correction: grammar errors like 'peoples' and 'social media have'.",
+        "evaluate": "It's accurate, I can see 'peoples' twice and 'social media have'. It's less important than the argument, but mistakes like these lose marks for accuracy.",
+        "articulate": "'People' is already plural, and 'social media' is treated as singular, so it takes 'has'. I should also check my verbs agree with their subjects.",
+        "choose": {
+          "decision": "accept",
+          "reason": "These are clear errors with clear fixes. I'll fix them after the structural changes."
+        }
+      },
+      {
+        "feedback_id": 3,
+        "recognize": "This is task alignment feedback. It's about whether I actually answered the question.",
+        "evaluate": "My conclusion says social media has 'good and bad sides' but never says whether I agree with a ban. That matters, because the task asks for my opinion on the statement.",
+        "articulate": "The conclusion should restate my position: I don't support a complete ban. Then it should say what I'd do instead.",
+        "choose": {
+          "decision": "adapt",
+          "reason": "I'll restate my opinion as suggested, but I'll also keep a suggestion for what to do instead, which I already hinted at in my draft."
+        }
+      }
+    ],
+    "revised_draft": "Social media is everywhere in teenagers' lives, and some people believe it should be banned for anyone under 18. In my opinion, social media has real problems, but a ban is not the best solution.\n\nFirstly, social media can harm young people's well-being. Teenagers see perfect photos of other people and start comparing themselves, which can affect their sleep and their grades. For example, some of my classmates stay awake until midnight looking at their phones. There are also dangerous people online, and some teenagers do not know who they are talking to.\n\nHowever, social media also brings real benefits that a ban would remove. My cousin talks to friends in other countries online, and this is helping him learn English. Online communities can also help shy students find friends who share their interests. Because of this, banning it would take away chances to learn and make friends that teenagers cannot easily find elsewhere.\n\nIn conclusion, I believe a complete ban is too extreme. Instead, schools and parents should teach teenagers to use social media safely, so they can enjoy the benefits while avoiding the risks.",
+    "reflection": [
+      {
+        "feedback_id": 1,
+        "meaning": "My benefits paragraph only said social media is popular and modern. It didn't explain why that's a good reason against a ban.",
+        "what_changed": "I rewrote the topic sentence, removed the 'modern' and 'popular' sentences, and linked my cousin's example to the idea that a ban would take away learning opportunities.",
+        "why_changed": "Now the paragraph makes a clear argument and supports it with an example, instead of just listing facts."
+      },
+      {
+        "feedback_id": 2,
+        "meaning": "I made grammar mistakes with plurals and verb agreement.",
+        "what_changed": "I changed 'peoples' to 'people', 'social media have' to 'social media has', and fixed the comma splice and the 'if it is banned' sentence by rewriting it.",
+        "why_changed": "Correct grammar makes my ideas easier to follow and doesn't distract the reader from my argument."
+      },
+      {
+        "feedback_id": 3,
+        "meaning": "My conclusion didn't say clearly whether I support banning social media for under 18s.",
+        "what_changed": "I wrote 'I believe a complete ban is too extreme' and replaced the vague 'find a solution' with a specific suggestion: teaching teenagers to use social media safely.",
+        "why_changed": "The reader now knows exactly what my opinion is, which is what the task asks for, and my suggestion shows I have thought about alternatives."
+      }
+    ]
+  }
