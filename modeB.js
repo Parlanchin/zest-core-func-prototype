@@ -47,7 +47,6 @@ const state = {
   screen: "essay", // essay | react | log
   commentIndex: 0,
   stepIndex: 0,
-  revealed: {},
 };
 
 function escapeHtml(text) {
@@ -72,14 +71,6 @@ function splitParagraphs(draft) {
 
 function commentsForParagraph(feedback, paragraphNumber) {
   return feedback.filter((item) => item.paragraph === paragraphNumber);
-}
-
-function revealKey(commentIndex, stepIndex) {
-  return `${commentIndex}:${stepIndex}`;
-}
-
-function isRevealed(commentIndex, stepIndex) {
-  return Boolean(state.revealed[revealKey(commentIndex, stepIndex)]);
 }
 
 function getTaskForFeedback(feedbackId) {
@@ -225,10 +216,10 @@ function renderEssayView() {
   });
 }
 
-function buildStepAnswerFields(step, task, reflection, revealed) {
+function buildStepAnswerFields(step, task, reflection) {
   if (step.key === "choose") {
-    const decision = revealed && task?.choose ? task.choose.decision : "";
-    const reason = revealed && task?.choose ? task.choose.reason : "";
+    const decision = task?.choose ? task.choose.decision : "";
+    const reason = task?.choose ? task.choose.reason : "";
     const options = DECISION_OPTIONS.map((option) => {
       const selected = decision === option ? " is-selected" : "";
       return `<span class="decision-chip${selected}">${escapeHtml(option)}</span>`;
@@ -247,8 +238,8 @@ function buildStepAnswerFields(step, task, reflection, revealed) {
   }
 
   if (step.key === "transform") {
-    const whatChanged = revealed && reflection ? reflection.what_changed : "";
-    const whyChanged = revealed && reflection ? reflection.why_changed : "";
+    const whatChanged = reflection ? reflection.what_changed : "";
+    const whyChanged = reflection ? reflection.why_changed : "";
     return `
       <div class="field">
         <label class="field-label" for="student-answer-what">What I changed</label>
@@ -261,7 +252,7 @@ function buildStepAnswerFields(step, task, reflection, revealed) {
     `;
   }
 
-  const value = revealed && task ? task[step.key] || "" : "";
+  const value = task ? task[step.key] || "" : "";
   return `
     <div class="field">
       <label class="field-label" for="student-answer">Your response</label>
@@ -277,7 +268,6 @@ function renderReactView() {
   const step = REACT_STEPS[state.stepIndex];
   const task = getTaskForFeedback(comment.id);
   const reflection = getReflectionForFeedback(comment.id);
-  const revealed = isRevealed(state.commentIndex, state.stepIndex);
   const isLastStep =
     state.commentIndex === feedbackList.length - 1 &&
     state.stepIndex === REACT_STEPS.length - 1;
@@ -311,12 +301,7 @@ function renderReactView() {
       </div>
 
       <div class="panel answer-panel">
-        ${buildStepAnswerFields(step, task, reflection, revealed)}
-        <div class="reveal-row">
-          <button type="button" class="btn" data-action="reveal" ${revealed ? "disabled" : ""}>
-            ${revealed ? "Student response shown" : "Show student response"}
-          </button>
-        </div>
+        ${buildStepAnswerFields(step, task, reflection)}
       </div>
 
       <div class="actions actions-split">
@@ -329,10 +314,6 @@ function renderReactView() {
   `;
 
   bindClicks(app, {
-    reveal: () => {
-      state.revealed[revealKey(state.commentIndex, state.stepIndex)] = true;
-      render();
-    },
     "back-essay": () => {
       state.screen = "essay";
       render();
@@ -422,7 +403,6 @@ function renderLogView() {
       state.screen = "react";
       state.commentIndex = 0;
       state.stepIndex = 0;
-      state.revealed = {};
       render();
       window.scrollTo(0, 0);
     },
@@ -455,6 +435,5 @@ export function mountModeB(root) {
   state.screen = "essay";
   state.commentIndex = 0;
   state.stepIndex = 0;
-  state.revealed = {};
   init();
 }

@@ -525,10 +525,6 @@ a.comment-target:focus-visible {
   color: var(--accent);
 }
 
-.reveal-row {
-  margin-top: 0.25rem;
-}
-
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
