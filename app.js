@@ -3,7 +3,8 @@ import { mountModeB } from "./modeB.js";
 import { mountModeC } from "./modeC.js";
 
 const app = document.getElementById("app");
-const brandLink = document.querySelector("[data-action='go-home']");
+const backBtn = document.querySelector(".back-btn[data-action='go-home']");
+const brandLink = document.querySelector(".brand-link[data-action='go-home']");
 
 const MODES = {
   a: { label: "Mode A", mount: mountModeA },
@@ -11,20 +12,28 @@ const MODES = {
   c: { label: "Mode C", mount: mountModeC },
 };
 
+function setBackVisible(visible) {
+  if (!backBtn) return;
+  backBtn.hidden = !visible;
+}
+
 function navigate(route) {
   window.scrollTo(0, 0);
 
   if (route === "home") {
+    setBackVisible(false);
     renderHome();
     return;
   }
 
   const mode = MODES[route];
   if (!mode) {
+    setBackVisible(false);
     renderHome();
     return;
   }
 
+  setBackVisible(true);
   mode.mount(app);
 }
 
@@ -64,11 +73,17 @@ function renderHome() {
   });
 }
 
-if (brandLink) {
-  brandLink.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigate("home");
-  });
+function goHome(event) {
+  event.preventDefault();
+  navigate("home");
 }
 
-renderHome();
+if (backBtn) {
+  backBtn.addEventListener("click", goHome);
+}
+
+if (brandLink) {
+  brandLink.addEventListener("click", goHome);
+}
+
+navigate("home");

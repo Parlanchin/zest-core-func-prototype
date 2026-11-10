@@ -42,6 +42,39 @@ body {
   padding: 1.5rem var(--space) 0.75rem;
 }
 
+.site-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.site-header-titles {
+  min-width: 0;
+}
+
+.back-btn {
+  appearance: none;
+  flex-shrink: 0;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.65rem;
+  cursor: pointer;
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+  background: var(--accent-soft);
+  border-color: var(--focus);
+  outline: none;
+}
+
 .brand {
   margin: 0;
   font-size: 1.35rem;
@@ -231,6 +264,25 @@ body {
 .task-text {
   margin: 0;
   color: var(--ink);
+}
+
+.task-text > p {
+  margin: 0;
+}
+
+.task-text > p + .task-quote,
+.task-text > .task-quote + p {
+  margin-top: 0.75rem;
+}
+
+.task-quote {
+  margin: 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  text-align: center;
+  color: var(--ink);
+  font-style: italic;
 }
 
 .essay-layout {

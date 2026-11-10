@@ -57,6 +57,26 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;");
 }
 
+function formatTaskText(task) {
+  const text = String(task || "");
+  const match = text.match(/^([\s\S]*?)"([^"]+)"([\s\S]*)$/);
+  if (!match) {
+    return `<p class="task-text">${escapeHtml(text)}</p>`;
+  }
+
+  const before = match[1].trim();
+  const quote = match[2].trim();
+  const after = match[3].trim();
+
+  return `
+    <div class="task-text">
+      ${before ? `<p>${escapeHtml(before)}</p>` : ""}
+      <blockquote class="task-quote">${escapeHtml(quote)}</blockquote>
+      ${after ? `<p>${escapeHtml(after)}</p>` : ""}
+    </div>
+  `;
+}
+
 function showStatus(message, isError = false) {
   app.innerHTML = `<p class="status${isError ? " error" : ""}">${escapeHtml(message)}</p>`;
 }
@@ -174,7 +194,7 @@ function renderEssayView() {
 
       <div class="panel">
         <h2 class="panel-title">Writing task</h2>
-        <p class="task-text">${escapeHtml(data.task)}</p>
+        ${formatTaskText(data.task)}
       </div>
 
       <div class="essay-layout">
