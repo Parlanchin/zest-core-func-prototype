@@ -647,11 +647,6 @@ a.comment-target:focus-visible {
   color: #ffb4b4;
 }
 
-.lexis-revised {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
 .lexis-evidence {
   margin: 0.45rem 0 0;
   font-size: 0.85rem;
