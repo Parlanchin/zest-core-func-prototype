@@ -1,10 +1,213 @@
-export function mountModeA(root) {
-  root.innerHTML = `
+let app = null;
+
+const TYPE_LABELS = {
+  surface: "Surface correction",
+  structural: "Structural feedback",
+  task_alignment: "Task alignment feedback",
+  developmental: "Developmental feedback",
+};
+
+const LEXIS_STATUS_LABELS = {
+  used_correctly: "Used correctly",
+  partly_correct: "Partly correct",
+  not_used: "Not used",
+};
+
+const state = {
+  data: null,
+};
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function showStatus(message, isError = false) {
+  app.innerHTML = `<p class="status${isError ? " error" : ""}">${escapeHtml(message)}</p>`;
+}
+
+function typeLabel(type) {
+  return TYPE_LABELS[type] || type;
+}
+
+function lexisStatusLabel(status) {
+  return LEXIS_STATUS_LABELS[status] || status;
+}
+
+function splitParagraphs(draft) {
+  return draft.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
+}
+
+function commentsForParagraph(feedback, paragraphNumber) {
+  return feedback.filter((item) => item.paragraph === paragraphNumber);
+}
+
+function render() {
+  if (!state.data) return;
+
+  const data = state.data;
+  const generalFeedback = data.feedback?.general || [];
+  const lexisFeedback = data.feedback?.lexis || [];
+  const usefulLexis = data.useful_lexis || [];
+  const paragraphs = splitParagraphs(data.draft || "");
+
+  const essayHtml = paragraphs
+    .map((text, index) => {
+      const number = index + 1;
+      const linked = commentsForParagraph(generalFeedback, number);
+      const mark =
+        linked.length > 0
+          ? `<span class="para-marks">${linked
+              .map(
+                (item) =>
+                  `<a class="para-mark" href="#comment-${item.id}" title="${escapeHtml(typeLabel(item.type))}">C${item.id}</a>`
+              )
+              .join("")}</span>`
+          : "";
+
+      return `
+        <div class="paragraph${linked.length ? " has-comment" : ""}" id="paragraph-${number}">
+          <span class="para-num">${number}</span>
+          <p>${escapeHtml(text)}</p>
+          ${mark}
+        </div>
+      `;
+    })
+    .join("");
+
+  const lexisChips = usefulLexis
+    .map((item) => `<li class="lexis-chip">${escapeHtml(item)}</li>`)
+    .join("");
+
+  const lexisFeedbackHtml = lexisFeedback
+    .map((item) => {
+      const evidence = item.draft_evidence
+        ? `<p class="lexis-evidence">Draft evidence: <em>${escapeHtml(item.draft_evidence)}</em></p>`
+        : "";
+
+      return `
+        <article class="lexis-item">
+          <div class="comment-meta">
+            <span class="lexis-term">${escapeHtml(item.item)}</span>
+            <span class="lexis-status lexis-status-${escapeHtml(item.draft_status)}">${escapeHtml(lexisStatusLabel(item.draft_status))}</span>
+            <span class="lexis-revised">After revision: ${escapeHtml(lexisStatusLabel(item.revised_status))}</span>
+          </div>
+          <p class="comment-text">${escapeHtml(item.text)}</p>
+          ${evidence}
+        </article>
+      `;
+    })
+    .join("");
+
+  const generalCommentsHtml = generalFeedback
+    .map((item) => {
+      const target =
+        item.paragraph == null
+          ? `<span class="comment-target">Whole draft</span>`
+          : `<a class="comment-target" href="#paragraph-${item.paragraph}">Paragraph ${item.paragraph}</a>`;
+
+      return `
+        <article class="comment" id="comment-${item.id}">
+          <div class="comment-meta">
+            <span class="type-tag type-${escapeHtml(item.type)}">${escapeHtml(typeLabel(item.type))}</span>
+            ${target}
+          </div>
+          <p class="comment-text">${escapeHtml(item.text)}</p>
+        </article>
+      `;
+    })
+    .join("");
+
+  const revisedParagraphs = splitParagraphs(data.revised_draft || "")
+    .map((text) => `<p>${escapeHtml(text)}</p>`)
+    .join("");
+
+  app.innerHTML = `
     <section class="view" id="view-mode-a" data-screen="mode-a">
       <header class="view-header">
-        <h1>Mode A</h1>
-        <p class="view-lead">Placeholder for Mode A workflow.</p>
+        <h1>Mode A - Task paraphrase &amp; useful lexis</h1>
       </header>
+
+      <details class="info-card">
+        <summary class="info-card-summary">
+          <span class="info-card-title">Workflow - each step the student takes</span>
+          <span class="info-card-arrow" aria-hidden="true"></span>
+        </summary>
+        <ol class="info-card-list">
+          <li>reads task</li>
+          <li>paraphrases the task</li>
+          <li>lists up to 5 useful lexical items which might be useful in the task</li>
+          <li>writes draft</li>
+          <li>reads AI-generated feedback (including whether lexical items were used, and used correctly/appropriately)</li>
+          <li>revises their draft</li>
+        </ol>
+      </details>
+
+      <div class="panel">
+        <h2 class="panel-title">Writing task</h2>
+        <p class="task-text">${escapeHtml(data.task)}</p>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Student paraphrase</h2>
+        <p class="task-text">${escapeHtml(data.paraphrase)}</p>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Useful lexical items <span class="count">${usefulLexis.length}</span></h2>
+        <ul class="lexis-list">${lexisChips}</ul>
+      </div>
+
+      <div class="essay-layout">
+        <div class="panel essay-panel">
+          <h2 class="panel-title">Draft</h2>
+          <div class="draft">${essayHtml}</div>
+        </div>
+
+        <aside class="panel comments-panel">
+          <h2 class="panel-title">General feedback <span class="count">${generalFeedback.length}</span></h2>
+          <div class="comments">${generalCommentsHtml}</div>
+        </aside>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Lexical feedback <span class="count">${lexisFeedback.length}</span></h2>
+        <div class="lexis-feedback">${lexisFeedbackHtml}</div>
+      </div>
+
+      <div class="panel revised-panel">
+        <h2 class="panel-title">Revised draft</h2>
+        <div class="revised-draft">${revisedParagraphs}</div>
+      </div>
     </section>
   `;
+}
+
+async function init() {
+  showStatus("Loading…");
+
+  try {
+    const response = await fetch("./data/modeA.json");
+    if (!response.ok) {
+      throw new Error(`Could not load data/modeA.json (${response.status})`);
+    }
+    state.data = await response.json();
+    window.appData = state.data;
+    render();
+  } catch (error) {
+    console.error(error);
+    showStatus(
+      "Could not load data/modeA.json. Serve this folder over HTTP (for example: python3 -m http.server) rather than opening the file directly.",
+      true
+    );
+  }
+}
+
+export function mountModeA(root) {
+  app = root;
+  state.data = null;
+  init();
 }
