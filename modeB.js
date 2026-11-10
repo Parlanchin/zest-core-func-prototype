@@ -365,6 +365,11 @@ function renderLogView() {
         <h1>Feedback log</h1>
       </header>
 
+      <div class="panel revised-panel">
+        <h2 class="panel-title">Revised draft</h2>
+        <div class="revised-draft">${revisedParagraphs}</div>
+      </div>
+
       <div class="table-wrap">
         <table class="log-table">
           <thead>
@@ -379,11 +384,6 @@ function renderLogView() {
             ${rows}
           </tbody>
         </table>
-      </div>
-
-      <div class="panel revised-panel">
-        <h2 class="panel-title">Revised draft</h2>
-        <div class="revised-draft">${revisedParagraphs}</div>
       </div>
 
       <div class="actions actions-split">
