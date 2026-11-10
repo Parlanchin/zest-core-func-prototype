@@ -1,0 +1,72 @@
+{
+    "task": "You have seen the following comment posted in an international student's forum online: \"Social media does more harm than good for young people. It should be banned for anyone under 18.\" Write an opinion essay giving your view on this statement. Support your arguments with reasons and relevant examples. (180-200 words)",
+    "paraphrase": "Someone online says social media hurts young people more than it helps them, and that nobody under 18 should be allowed to use it. I have to write an essay saying whether I agree. I need to give reasons and examples, and write about 180 to 200 words.",
+    "useful_lexis": [
+      "ban",
+      "well-being",
+      "benefits",
+      "compare themselves with others",
+      "peer pressure"
+    ],
+    "draft": "Nowadays social media is everywhere and many people think it is bad for young peoples. In my opinion, there are some problems but banning it is not the best solution. I will explain my opinion in this essay.\n\nFirstly, social media can make teenagers feel bad about themselves. They see perfect photos of other people and they compare, this can affect their sleep and their grades. For example, some of my classmates stay awake until midnight looking at their phones. Also there are many dangerous peoples online. Some teenagers do not know who they are talking with.\n\nSocial media is good too. It is very modern. Many young people use it every day and it is popular. For example, my cousin talks to his friends who live in other countries on social media and he is learning English too. Teenagers like it a lot so they would be angry if it is banned, and that is not good.\n\nIn conclusion, social media have both good and bad sides. The government should think about this carefully and find a solution. I think the rules should be different for different ages.",
+    "feedback": {
+      "lexis": [
+        {
+          "item": "ban",
+          "draft_status": "used_correctly",
+          "draft_evidence": "banning it / if it is banned",
+          "text": "Used correctly in paragraphs 1 and 3. Could you use it in your conclusion too?",
+          "revised_status": "used_correctly"
+        },
+        {
+          "item": "well-being",
+          "draft_status": "not_used",
+          "draft_evidence": null,
+          "text": "Not used yet. Could it replace \"feel bad about themselves\" in paragraph 2?",
+          "revised_status": "used_correctly"
+        },
+        {
+          "item": "benefits",
+          "draft_status": "not_used",
+          "draft_evidence": null,
+          "text": "Not used yet. Paragraph 3 says \"good\" but never names the benefits.",
+          "revised_status": "used_correctly"
+        },
+        {
+          "item": "compare themselves with others",
+          "draft_status": "partly_correct",
+          "draft_evidence": "they compare",
+          "text": "\"They compare\" is incomplete. Who are they comparing themselves with?",
+          "revised_status": "used_correctly"
+        },
+        {
+          "item": "peer pressure",
+          "draft_status": "not_used",
+          "draft_evidence": null,
+          "text": "Not used. Does it fit your argument, or is there a better item to use?",
+          "revised_status": "not_used"
+        }
+      ],
+      "general": [
+        {
+          "id": 1,
+          "type": "structural",
+          "paragraph": 3,
+          "text": "Paragraph 3 lists benefits but doesn't explain why they matter. Is your argument clear?"
+        },
+        {
+          "id": 2,
+          "type": "surface",
+          "paragraph": null,
+          "text": "Check plural forms and subject-verb agreement in paragraphs 1, 2 and 4."
+        },
+        {
+          "id": 3,
+          "type": "task_alignment",
+          "paragraph": 4,
+          "text": "Does your conclusion clearly answer the question about banning social media?"
+        }
+      ]
+    },
+    "revised_draft": "Social media is everywhere in teenagers' lives, and some people believe it should be banned for anyone under 18. In my opinion, social media has real problems, but a ban is not the best solution.\n\nFirstly, social media can harm young people's well-being. Teenagers see perfect photos of other people and start comparing themselves, which can affect their sleep and their grades. For example, some of my classmates stay awake until midnight looking at their phones. There are also dangerous people online, and some teenagers do not know who they are talking to.\n\nHowever, social media also brings real benefits that a ban would remove. My cousin talks to friends in other countries online, and this is helping him learn English. Online communities can also help shy students find friends who share their interests. Because of this, banning it would take away chances to learn and make friends that teenagers cannot easily find elsewhere.\n\nIn conclusion, I believe a complete ban is too extreme. Instead, schools and parents should teach teenagers to use social media safely, so they can enjoy the benefits while avoiding the risks."
+  }

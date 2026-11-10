@@ -1,6 +1,6 @@
 # R.E.A.C.T. student writing-feedback prototype
 
-Throwaway click-through demo for teachers. Single static page; all content from `data.json`.
+Throwaway click-through demo for teachers. Single static page; Mode B content from `data/modeB.json`.
 
 ## Local
 

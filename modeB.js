@@ -413,9 +413,9 @@ async function init() {
   showStatus("Loading…");
 
   try {
-    const response = await fetch("./data.json");
+    const response = await fetch("./data/modeB.json");
     if (!response.ok) {
-      throw new Error(`Could not load data.json (${response.status})`);
+      throw new Error(`Could not load data/modeB.json (${response.status})`);
     }
     state.data = await response.json();
     window.appData = state.data;
@@ -423,7 +423,7 @@ async function init() {
   } catch (error) {
     console.error(error);
     showStatus(
-      "Could not load data.json. Serve this folder over HTTP (for example: python3 -m http.server) rather than opening the file directly.",
+      "Could not load data/modeB.json. Serve this folder over HTTP (for example: python3 -m http.server) rather than opening the file directly.",
       true
     );
   }
