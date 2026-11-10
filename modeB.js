@@ -162,9 +162,24 @@ function renderEssayView() {
   app.innerHTML = `
     <section class="view" id="view-essay" data-screen="essay">
       <header class="view-header">
-        <h1>Your draft</h1>
-        <p class="view-lead">Read the task, your essay, and the feedback comments. Then start the R.E.A.C.T. routine.</p>
+        <h1>Mode B - Based on your REACT paradigm</h1>
       </header>
+
+      <details class="info-card">
+        <summary class="info-card-summary">
+          <span class="info-card-title">Workflow - each step the student takes</span>
+          <span class="info-card-arrow" aria-hidden="true"></span>
+        </summary>
+        <ol class="info-card-list">
+          <li>reads task</li>
+          <li>writes draft and clicks 'evaluate'</li>
+          <li>reads feedback summary cards</li>
+          <li>begins REACT tasks</li>
+          <li>writes a revision</li>
+          <li>fills feedback log</li>
+          <li>submits to teacher</li>
+        </ol>
+      </details>
 
       <div class="panel">
         <h2 class="panel-title">Writing task</h2>
@@ -367,7 +382,6 @@ function renderLogView() {
     <section class="view" id="view-log" data-screen="log">
       <header class="view-header">
         <h1>Feedback log</h1>
-        <p class="view-lead">Proof of the thinking behind the revision: what the feedback meant, what changed, and why. Filled from the R.E.A.C.T. answers in <code>data.json</code>.</p>
       </header>
 
       <div class="table-wrap">

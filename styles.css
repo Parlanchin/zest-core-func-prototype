@@ -142,6 +142,61 @@ body {
   max-width: 40rem;
 }
 
+.info-card {
+  margin-bottom: 1rem;
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+}
+
+.info-card-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  list-style: none;
+  cursor: pointer;
+  padding: 0.85rem 1rem;
+  user-select: none;
+}
+
+.info-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.info-card-title {
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.info-card-arrow {
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s ease;
+}
+
+.info-card[open] .info-card-arrow {
+  transform: rotate(225deg);
+  margin-top: 0.25rem;
+}
+
+.info-card-list {
+  margin: 0;
+  padding: 0 1rem 1rem 2rem;
+  color: var(--ink);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.info-card-list li::marker {
+  color: var(--muted);
+}
+
 .panel {
   border-radius: var(--radius);
   padding: 1rem;
