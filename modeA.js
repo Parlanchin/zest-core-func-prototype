@@ -181,16 +181,14 @@ function render() {
         <ul class="lexis-list">${lexisChips}</ul>
       </div>
 
-      <div class="essay-layout">
-        <div class="panel essay-panel">
-          <h2 class="panel-title">Draft</h2>
-          <div class="draft">${essayHtml}</div>
-        </div>
+      <div class="panel">
+        <h2 class="panel-title">Draft</h2>
+        <div class="draft">${essayHtml}</div>
+      </div>
 
-        <aside class="panel comments-panel">
-          <h2 class="panel-title">General feedback <span class="count">${generalFeedback.length}</span></h2>
-          <div class="comments">${generalCommentsHtml}</div>
-        </aside>
+      <div class="panel">
+        <h2 class="panel-title">General feedback <span class="count">${generalFeedback.length}</span></h2>
+        <div class="comments">${generalCommentsHtml}</div>
       </div>
 
       <div class="panel">

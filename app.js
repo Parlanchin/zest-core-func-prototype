@@ -54,8 +54,9 @@ function renderHome() {
     <section class="view" id="view-home" data-screen="home">
       <header class="view-header">
         <h1>Each of these modes represent a possible workflow for students to produce their writing.</h1>
-        <p>- What you'll see for each mode is a completed workflow with drafts, tasks, revisions etc... ready to be submitted to their teacher.</p>
+        <p>- What you'll see for each mode is a completed workflow with drafts, tasks, revisions etc... ready to be submitted to their teacher. In practice not everything would show up on the screen at once. Likely would be a set of tasks student's complete individually.</p>
         <p>- Each mode has a drop down at the top. Open it to see a summary of the steps the student completes for that flow.</p>
+         
       </header>
 
       <nav class="toc" aria-label="Modes">
