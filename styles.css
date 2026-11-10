@@ -50,10 +50,55 @@ body {
   color: var(--accent);
 }
 
+.brand-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-link:hover,
+.brand-link:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
 .tagline {
   margin: 0.2rem 0 0;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.toc {
+  margin-top: 0.5rem;
+}
+
+.toc-list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.toc-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+
+.toc-link:hover,
+.toc-link:focus-visible {
+  background: var(--accent-soft);
+  border-color: var(--focus);
+  outline: none;
 }
 
 .app {
