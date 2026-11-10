@@ -93,7 +93,6 @@ function render() {
           <div class="comment-meta">
             <span class="lexis-term">${escapeHtml(item.item)}</span>
             <span class="lexis-status lexis-status-${escapeHtml(item.draft_status)}">${escapeHtml(lexisStatusLabel(item.draft_status))}</span>
-            <span class="lexis-revised">After revision: ${escapeHtml(lexisStatusLabel(item.revised_status))}</span>
           </div>
           <p class="comment-text">${escapeHtml(item.text)}</p>
           ${evidence}
@@ -143,6 +142,7 @@ function render() {
           <li>writes draft</li>
           <li>reads AI-generated feedback (including whether lexical items were used, and used correctly/appropriately)</li>
           <li>revises their draft</li>
+          <li>writes reflection</li>
         </ol>
       </details>
 
@@ -181,6 +181,11 @@ function render() {
       <div class="panel revised-panel">
         <h2 class="panel-title">Revised draft</h2>
         <div class="revised-draft">${revisedParagraphs}</div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Student reflection</h2>
+        <p class="task-text">${escapeHtml(data.student_reflection || "")}</p>
       </div>
     </section>
   `;
