@@ -158,9 +158,9 @@ function render() {
         <ol class="info-card-list">
           <li>reads task</li>
           <li>paraphrases the task</li>
-          <li>lists up to 5 useful lexical items which might be useful in the task</li>
+          <li>lists up to 5 useful lexical items which might be useful</li>
           <li>writes draft</li>
-          <li>reads AI-generated feedback (including whether lexical items were used, and used correctly/appropriately)</li>
+          <li>reads AI-generated feedback</li>
           <li>revises their draft</li>
           <li>writes reflection</li>
         </ol>
